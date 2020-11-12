@@ -9,7 +9,6 @@
   + [Library](#library)
   + [With command-line](#with-command-line)
 * [External dependencies](#external-dependencies)
-* [Documentation](#documentation)
 * [License](#license)
 
 ## Description
