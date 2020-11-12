@@ -1,14 +1,34 @@
+[![PkgGoDev](https://pkg.go.dev/badge/pigeonlab/notifier)](https://pkg.go.dev/pigeonlab/notifier)
+[![Go Report Card](https://goreportcard.com/badge/github.com/pigeonlab/notifier)](https://goreportcard.com/report/github.com/pigeonlab/notifier)
+
 # Notifier
+
+* [Description](#description)
+* [Installation](#installation)
+* [Usage](#usage)
+  + [Library](#library)
+  + [With command-line](#with-command-line)
+* [External dependencies](#external-dependencies)
+* [Documentation](#documentation)
+* [License](#license)
+
+## Description
 Notifier is a wrapper of the standard library HTTP client that helps your application make a large number of requests, at scale.
 It can be used in as a library or from the command-line interface.
 
-## How it works
 The requests are processed in worker polls. A fixed number of `x` workers work their way through `N` requests in a work queue.
 Each request stays in a queue until a worker finishes up its current task and pulls a new one off.
 To increase the concurrency level each request goes through different work queues according to the request's status (sending or processing response).
 The number of workers is configurable.
 
-## Library
+## Installation
+```
+go get -u github.com/pigeonlab/notifier
+```
+
+## Usage
+
+### Library
 
     // Prepare the requests.
     var requests []*http.Request  
@@ -25,7 +45,7 @@ The number of workers is configurable.
     bulkRequest := pkg.NewBulkRequest(requests, dispatchRequestsWorkers, processResponseWorkers)  
     HTTPClient.Do(bulkRequest)
 
-## With command-line
+### With command-line
 Run `make all` to install the dependencies, run the tests and compile the program for the main platforms.
 The binaries will be created under the folder `bin`.
 
@@ -49,12 +69,12 @@ The binaries will be created under the folder `bin`.
 
 #### Default settings
 
-    notifier-linux notify --url "https://example.com/receiver" < messages.txt
+    notifier notify --url "https://example.com/receiver" < messages.txt
 
 #### Custom settings
 Send notification in bulk of 10 requests at a time with an interval of 500 milliseconds and a request timeout of 2 seconds:
 
-    notifier-linux notify --url "https://example.com/receiver" --chunkSize=10  --interval=500ms requestTimeout=2s < messages.txt
+    notifier notify --url "https://example.com/receiver" --chunkSize=10  --interval=500ms requestTimeout=2s < messages.txt
 
 #### Example output
 
@@ -74,5 +94,31 @@ Send notification in bulk of 10 requests at a time with an interval of 500 milli
     Message at line 4 - Returned status code 0 - Error: http client error: Post "https://example.com/receiver": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
     Message at line 5 - Returned status code 404
 
-## External libraries   
- - Test suite: https://github.com/stretchr/testify  
+## External dependencies   
+ - Test suite: https://github.com/stretchr/testify
+ 
+## License
+
+```
+MIT License
+
+Copyright (c) 2020 Pigeonlab
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+```
