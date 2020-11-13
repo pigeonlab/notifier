@@ -30,7 +30,7 @@ func NewBulkRequest(requests []*http.Request, dispatchRequestsWorkers int, proce
 	}
 }
 
-// AddRequests adds the given request to this BulkRequest.
+// AddRequest adds the given request to this BulkRequest.
 func (b *BulkRequest) AddRequest(request *http.Request) *BulkRequest {
 	b.requests = append(b.requests, request)
 	return b
