@@ -1,6 +1,5 @@
 [![PkgGoDev](https://pkg.go.dev/badge/pigeonlab/notifier)](https://pkg.go.dev/pigeonlab/notifier)
 [![Go Report Card](https://goreportcard.com/badge/github.com/pigeonlab/notifier)](https://goreportcard.com/report/github.com/pigeonlab/notifier)
-
 # Notifier
 
 * [Description](#description)
