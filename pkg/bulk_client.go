@@ -28,7 +28,7 @@ type BulkHTTPClient struct {
 }
 
 // NewBulkHTTPClient returns a new instance of BulkHTTPClient.
-func NewBulkHTTPClient(client HTTPClient, ctx context.Context) *BulkHTTPClient {
+func NewBulkHTTPClient(ctx context.Context, client HTTPClient) *BulkHTTPClient {
 	return &BulkHTTPClient{
 		HTTPClient: client,
 		ctx:        ctx,

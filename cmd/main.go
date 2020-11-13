@@ -99,7 +99,7 @@ func main() {
 
 	// Prepare HTTP client and inject the cancellable context.
 	HTTPClient := &http.Client{Timeout: *requestTimeout}
-	bulkHTTPClient := pkg.NewBulkHTTPClient(HTTPClient, ctx)
+	bulkHTTPClient := pkg.NewBulkHTTPClient(ctx, HTTPClient)
 
 	// Start the program has child process.
 	ticker := time.NewTicker(*interval)

@@ -26,7 +26,7 @@ func TestConcurrentRequestsAllSucceed(t *testing.T) {
 	noOfRequests := 10
 	timeout := TimeoutBiggerThanServerTime
 	HTTPClient := &http.Client{Timeout: timeout}
-	client := NewBulkHTTPClient(HTTPClient, context.Background())
+	client := NewBulkHTTPClient(context.Background(), HTTPClient)
 	var requests []*http.Request
 
 	for i := 0; i < noOfRequests; i++ {
@@ -57,7 +57,7 @@ func TestReturnsResponsesInOrder(t *testing.T) {
 	server := StartMockServer()
 	defer server.Close()
 	HTTPClient := &http.Client{Timeout: TimeoutBiggerThanServerTime}
-	client := NewBulkHTTPClient(HTTPClient, context.Background())
+	client := NewBulkHTTPClient(context.Background(), HTTPClient)
 
 	queryFast := url.Values{}
 	queryFast.Set("kind", "fast")
@@ -92,7 +92,7 @@ func TestFailureDueToClientTimeout(t *testing.T) {
 	server := StartMockServer()
 	defer server.Close()
 	HTTPClient := &http.Client{Timeout: TimeoutSmallerThanServerTime}
-	client := NewBulkHTTPClient(HTTPClient, context.Background())
+	client := NewBulkHTTPClient(context.Background(), HTTPClient)
 
 	queryFast := url.Values{}
 	queryFast.Set("kind", "fast")
@@ -123,7 +123,7 @@ func TestWithMixedResultsAndMultipleWorkers(t *testing.T) {
 	server := StartMockServer()
 	defer server.Close()
 	HTTPClient := &http.Client{Timeout: TimeoutBiggerThanServerTime}
-	client := NewBulkHTTPClient(HTTPClient, context.Background())
+	client := NewBulkHTTPClient(context.Background(), HTTPClient)
 
 	queryFast := url.Values{}
 	queryFast.Set("kind", "fast")
@@ -162,7 +162,7 @@ func TestWithMixedResultsAndSingleWorker(t *testing.T) {
 	server := StartMockServer()
 	defer server.Close()
 	HTTPClient := &http.Client{Timeout: TimeoutBiggerThanServerTime}
-	client := NewBulkHTTPClient(HTTPClient, context.Background())
+	client := NewBulkHTTPClient(context.Background(), HTTPClient)
 
 	queryFast := url.Values{}
 	queryFast.Set("kind", "fast")
@@ -206,7 +206,7 @@ func TestBulkClientRequestFirerAndProcessorGoroutinesAreClosed(t *testing.T) {
 	var errs []error
 
 	for noOfBulkRequests := 0; noOfBulkRequests < totalBulkRequests; noOfBulkRequests++ {
-		client := NewBulkHTTPClient(HTTPClient, context.Background())
+		client := NewBulkHTTPClient(context.Background(), HTTPClient)
 		bulkRequest := newClientWithNRequests(reqsPerBulkRequest, server.URL)
 		res, err := client.Do(bulkRequest)
 		responses = append(responses, res...)
